@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手势工坊</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <div class="brand-mark" aria-hidden="true"></div>
+
+        <nav class="nav-list" aria-label="功能导航">
+          <a class="nav-item active" href="#live" data-view="joints" aria-current="page">
+            <span class="nav-icon">▣</span>
+            <span>手指关节</span>
+          </a>
+          <a class="nav-item" href="#gestures" data-view="gestures">
+            <span class="nav-icon">☝</span>
+            <span>手势</span>
+          </a>
+        </nav>
+
+        <div class="fps-card" aria-label="帧率状态" hidden>
+          <span class="online-dot"></span>
+          <strong>120 帧/秒</strong>
+          <div class="sparkline" aria-hidden="true"></div>
+        </div>
+      </aside>
+
+      <section class="workspace" id="live">
+        <header class="topbar">
+          <div>
+            <h1>手势工坊</h1>
+            <p>MediaPipe 手部手势工作台</p>
+          </div>
+
+          <div class="topbar-actions" aria-label="页面操作" hidden>
+            <button class="tool-button" type="button">文档</button>
+            <button class="icon-button" type="button" aria-label="浅色模式">☼</button>
+            <button class="pill-toggle" type="button" aria-label="主题切换"><span></span></button>
+            <button class="icon-button" type="button" aria-label="深色模式">☾</button>
+            <button class="icon-button" type="button" aria-label="设置">⚙</button>
+            <button class="avatar-button" type="button" aria-label="用户菜单">用户</button>
+          </div>
+        </header>
+
+        <div class="content-grid">
+          <section class="preview-card" aria-label="摄像头识别画面">
+            <div class="stage">
+              <video id="camera" playsinline muted></video>
+              <canvas id="overlay"></canvas>
+
+              <div class="live-badge">
+                <span></span>
+                实时
+              </div>
+
+              <div class="quality-pill" hidden>1080p ▾</div>
+              <button class="overlay-icon expand-icon" type="button" aria-label="放大预览" hidden>⛶</button>
+              <div id="status" class="status">准备加载模型</div>
+
+              <div class="stage-controls" aria-label="摄像头控制">
+                <button class="floating-button" type="button" aria-label="截图" hidden>▧</button>
+                <button id="startButton" class="primary-capture" type="button" aria-label="开启摄像头">▶</button>
+                <button class="floating-button" type="button" aria-label="切换摄像头" hidden>▣</button>
+              </div>
+            </div>
+
+            <div class="recording-quick-controls" aria-label="竖屏录制快捷控制">
+              <button class="recording-quick-control" type="button" data-quick-toggle="showLandmarks" aria-pressed="true">
+                关键点
+              </button>
+              <button class="recording-quick-control" type="button" data-quick-toggle="showCircle" aria-pressed="true">
+                图形
+              </button>
+              <button class="recording-quick-control" type="button" data-quick-toggle="showAreaEffect" aria-pressed="true">
+                特效
+              </button>
+              <button class="recording-quick-control" type="button" data-quick-toggle="showValues" aria-pressed="false">
+                数值
+              </button>
+              <button class="recording-quick-control" type="button" data-quick-toggle="showGestures" aria-pressed="true">
+                手势
+              </button>
+              <button class="recording-quick-control" type="button" data-quick-toggle="audioEnabled" aria-pressed="false">
+                声音
+              </button>
+            </div>
+
+            <div class="hand-mode-panel" aria-label="左右手图形模式">
+              <fieldset class="mode-group compact">
+                <legend>区域模式</legend>
+                <label>
+                  <input type="radio" name="handAreaMode" value="independent" checked />
+                  <span>独立左右手</span>
+                </label>
+                <label>
+                  <input type="radio" name="handAreaMode" value="connected" />
+                  <span>左右手相连</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="mode-group compact" data-handed-mode-group>
+                <legend>左手模式</legend>
+                <label>
+                  <input type="radio" name="leftMode" value="line" checked />
+                  <span>连线</span>
+                </label>
+                <label>
+                  <input type="radio" name="leftMode" value="circle" />
+                  <span>圆圈</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="mode-group compact" data-handed-mode-group>
+                <legend>右手模式</legend>
+                <label>
+                  <input type="radio" name="rightMode" value="line" />
+                  <span>连线</span>
+                </label>
+                <label>
+                  <input type="radio" name="rightMode" value="circle" checked />
+                  <span>圆圈</span>
+                </label>
+              </fieldset>
+            </div>
+          </section>
+
+          <aside class="panel" aria-label="可视化和识别参数">
+            <section class="control-card preset-card" data-panel-id="presets">
+              <div class="card-title">
+                <span class="card-icon">↺</span>
+                <h2>参数预设</h2>
+                <button id="resetSettingsButton" class="reset-button" type="button">重置</button>
+              </div>
+
+              <div class="preset-list" aria-label="参数预设列表">
+                <div class="preset-row">
+                  <div>
+                    <strong>预设 1</strong>
+                    <span data-preset-state="1">未保存</span>
+                  </div>
+                  <button type="button" data-preset-action="load" data-preset-slot="1">调用</button>
+                  <button type="button" data-preset-action="save" data-preset-slot="1">保存</button>
+                </div>
+                <div class="preset-row">
+                  <div>
+                    <strong>预设 2</strong>
+                    <span data-preset-state="2">未保存</span>
+                  </div>
+                  <button type="button" data-preset-action="load" data-preset-slot="2">调用</button>
+                  <button type="button" data-preset-action="save" data-preset-slot="2">保存</button>
+                </div>
+                <div class="preset-row">
+                  <div>
+                    <strong>预设 3</strong>
+                    <span data-preset-state="3">未保存</span>
+                  </div>
+                  <button type="button" data-preset-action="load" data-preset-slot="3">调用</button>
+                  <button type="button" data-preset-action="save" data-preset-slot="3">保存</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="control-card" data-panel-id="visualization">
+              <div class="card-title">
+                <span class="card-icon">◎</span>
+                <h2>可视化</h2>
+                <button class="collapse-button" type="button" aria-label="折叠可视化">⌃</button>
+              </div>
+
+              <label class="color-row">
+                <span>描边颜色</span>
+                <span class="color-control">
+                  <input id="circleColor" type="color" value="#00d084" />
+                  <output id="circleColorValue">#00D084</output>
+                </span>
+              </label>
+
+              <label class="field">
+                <span>线宽 <output id="lineWidthValue">4</output></span>
+                <input id="lineWidth" type="range" min="1" max="20" step="1" value="4" />
+              </label>
+
+              <label class="field">
+                <span>延迟 <output id="smoothingValue">0.35</output></span>
+                <input id="smoothing" type="range" min="0" max="1" step="0.01" value="0.35" />
+              </label>
+
+              <label class="toggle">
+                <span>显示关键点</span>
+                <input id="showLandmarks" type="checkbox" checked />
+              </label>
+
+              <label class="toggle">
+                <span>显示图形</span>
+                <input id="showCircle" type="checkbox" checked />
+              </label>
+
+              <label class="toggle">
+                <span>显示数值</span>
+                <input id="showValues" type="checkbox" />
+              </label>
+            </section>
+
+            <section class="control-card" data-panel-id="areaEffects">
+              <div class="card-title">
+                <span class="card-icon">✦</span>
+                <h2>区域特效</h2>
+                <button class="collapse-button" type="button" aria-label="折叠区域特效">⌃</button>
+              </div>
+
+              <label class="toggle">
+                <span>启用区域特效</span>
+                <input id="showAreaEffect" type="checkbox" checked />
+              </label>
+
+              <label class="field">
+                <span>特效类型</span>
+                <select id="areaEffectType">
+                  <option value="pixel">像素特效</option>
+                  <option value="liquidGlass">流体玻璃</option>
+                  <option value="heatmap">热成像</option>
+                  <option value="glitch">故障风</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>强度 <output id="areaEffectIntensityValue">0.60</output></span>
+                <input id="areaEffectIntensity" type="range" min="0" max="1" step="0.01" value="0.6" />
+              </label>
+
+              <label class="field">
+                <span>速度 <output id="areaEffectSpeedValue">1.00</output></span>
+                <input id="areaEffectSpeed" type="range" min="0" max="2" step="0.01" value="1" />
+              </label>
+
+              <label class="field">
+                <span>透明度 <output id="areaEffectOpacityValue">0.65</output></span>
+                <input id="areaEffectOpacity" type="range" min="0" max="1" step="0.01" value="0.65" />
+              </label>
+
+              <div class="effect-region-row">
+                <span>当前区域</span>
+                <strong>圆圈 / 双手相连</strong>
+              </div>
+            </section>
+
+            <section class="control-card" data-panel-id="audio">
+              <div class="card-title">
+                <span class="card-icon">♪</span>
+                <h2>声音映射</h2>
+                <button class="collapse-button" type="button" aria-label="折叠声音映射">⌃</button>
+              </div>
+
+              <label class="toggle">
+                <span>启用声音</span>
+                <input id="audioEnabled" type="checkbox" />
+              </label>
+
+              <label class="field">
+                <span>主音量 <output id="audioMasterVolumeValue">0.35</output></span>
+                <input id="audioMasterVolume" type="range" min="0" max="1" step="0.01" value="0.35" />
+              </label>
+
+              <label class="field">
+                <span>BPM <output id="audioBpmValue">120</output></span>
+                <input id="audioBpm" type="range" min="70" max="160" step="1" value="120" />
+              </label>
+
+              <label class="field">
+                <span>节奏密度 <output id="audioRhythmDensityValue">0.55</output></span>
+                <input id="audioRhythmDensity" type="range" min="0" max="1" step="0.01" value="0.55" />
+              </label>
+
+              <div class="sound-map-list" aria-label="左右手声音映射">
+                <div class="sound-map-row">
+                  <span>左手长度</span>
+                  <strong>高音节奏</strong>
+                </div>
+                <div class="sound-map-row">
+                  <span>右手长度</span>
+                  <strong>低音脉冲</strong>
+                </div>
+              </div>
+            </section>
+
+            <section class="control-card" data-panel-id="camera">
+              <div class="card-title">
+                <span class="card-icon">▣</span>
+                <h2>摄像头</h2>
+                <button class="collapse-button" type="button" aria-label="折叠摄像头">⌃</button>
+              </div>
+
+              <div class="setting-row">
+                <span>镜像画面</span>
+                <span class="switch-on" aria-hidden="true"></span>
+              </div>
+
+              <fieldset class="mode-group compact aspect-ratio-group">
+                <legend>画面比例</legend>
+                <label>
+                  <input type="radio" name="aspectRatioMode" value="current" checked />
+                  <span>当前比例</span>
+                </label>
+                <label>
+                  <input type="radio" name="aspectRatioMode" value="portrait" />
+                  <span>竖屏 3:4</span>
+                </label>
+              </fieldset>
+            </section>
+
+            <section class="control-card gesture-card" data-panel-id="gestureDetection" hidden>
+              <div class="card-title">
+                <span class="card-icon">✧</span>
+                <h2>手势检测</h2>
+                <button class="collapse-button" type="button" aria-label="折叠手势检测">⌃</button>
+              </div>
+
+              <label class="toggle">
+                <span>显示手势标签</span>
+                <input id="showGestures" type="checkbox" checked />
+              </label>
+
+              <label class="field">
+                <span>触发阈值 <output id="gestureScoreThresholdValue">0.50</output></span>
+                <input id="gestureScoreThreshold" type="range" min="0" max="1" step="0.01" value="0.5" />
+              </label>
+
+              <div class="gesture-toolbar">
+                <label class="toggle compact-toggle">
+                  <span>全部开启</span>
+                  <input id="toggleAllGestures" type="checkbox" checked />
+                </label>
+                <span class="gesture-count">已启用 <output id="enabledGesturesValue">7/7</output></span>
+              </div>
+
+              <div class="gesture-list" aria-label="手势检测开关">
+                <label class="gesture-option">
+                  <input type="checkbox" name="enabledGesture" value="Closed_Fist" checked />
+                  <span>
+                    <strong>握拳</strong>
+                    <small>Closed_Fist</small>
+                  </span>
+                </label>
+                <label class="gesture-option">
+                  <input type="checkbox" name="enabledGesture" value="Open_Palm" checked />
+                  <span>
+                    <strong>张开手掌</strong>
+                    <small>Open_Palm</small>
+                  </span>
+                </label>
+                <label class="gesture-option">
+                  <input type="checkbox" name="enabledGesture" value="Pointing_Up" checked />
+                  <span>
+                    <strong>食指向上</strong>
+                    <small>Pointing_Up</small>
+                  </span>
+                </label>
+                <label class="gesture-option">
+                  <input type="checkbox" name="enabledGesture" value="Thumb_Up" checked />
+                  <span>
+                    <strong>点赞</strong>
+                    <small>Thumb_Up</small>
+                  </span>
+                </label>
+                <label class="gesture-option">
+                  <input type="checkbox" name="enabledGesture" value="Thumb_Down" checked />
+                  <span>
+                    <strong>倒赞</strong>
+                    <small>Thumb_Down</small>
+                  </span>
+                </label>
+                <label class="gesture-option">
+                  <input type="checkbox" name="enabledGesture" value="Victory" checked />
+                  <span>
+                    <strong>比耶</strong>
+                    <small>Victory</small>
+                  </span>
+                </label>
+                <label class="gesture-option">
+                  <input type="checkbox" name="enabledGesture" value="ILoveYou" checked />
+                  <span>
+                    <strong>我爱你</strong>
+                    <small>ILoveYou</small>
+                  </span>
+                </label>
+              </div>
+
+              <fieldset class="mode-group compact">
+                <legend>标签语言</legend>
+                <label>
+                  <input type="radio" name="gestureLabelLanguage" value="zh" checked />
+                  <span>中文</span>
+                </label>
+                <label>
+                  <input type="radio" name="gestureLabelLanguage" value="en" />
+                  <span>英文</span>
+                </label>
+              </fieldset>
+
+              <button id="saveSettingsButton" class="secondary-button" type="button">保存设置</button>
+            </section>
+          </aside>
+        </div>
+
+        <footer class="app-footer" hidden>
+          <div>
+            <strong>手势工坊</strong>
+            <span>v1.0.0</span>
+            <span class="footer-status"><i></i> 已连接</span>
+          </div>
+          <span class="model-badge">MediaPipe 手势识别</span>
+          <span>为创意编码而生</span>
+        </footer>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
