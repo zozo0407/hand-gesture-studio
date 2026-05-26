@@ -47,7 +47,7 @@ describe("readSettings", () => {
         showGestures: true,
         gestureScoreThreshold: "0.72",
         gestureLabelLanguage: "en",
-        aspectRatioMode: "portrait",
+        aspectRatioMode: "square",
         enabledGestures: {
           Victory: false,
           Thumb_Up: "yes",
@@ -78,7 +78,7 @@ describe("readSettings", () => {
       showGestures: true,
       gestureScoreThreshold: 0.72,
       gestureLabelLanguage: "en",
-      aspectRatioMode: "portrait",
+      aspectRatioMode: "square",
       enabledGestures: {
         ...DEFAULT_SETTINGS.enabledGestures,
         Victory: false,
@@ -110,7 +110,7 @@ describe("writeSettings", () => {
       showGestures: true,
       gestureScoreThreshold: -1,
       gestureLabelLanguage: "fr",
-      aspectRatioMode: "square",
+      aspectRatioMode: "portrait",
       enabledGestures: {
         Victory: false,
         Unknown: false,
@@ -136,7 +136,7 @@ describe("writeSettings", () => {
       showGestures: true,
       gestureScoreThreshold: 0,
       gestureLabelLanguage: DEFAULT_SETTINGS.gestureLabelLanguage,
-      aspectRatioMode: DEFAULT_SETTINGS.aspectRatioMode,
+      aspectRatioMode: "square",
       enabledGestures: {
         ...DEFAULT_SETTINGS.enabledGestures,
         Victory: false,

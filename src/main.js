@@ -1141,12 +1141,12 @@ function resizeCanvas() {
 }
 
 function updateStageAspect(width = video.videoWidth, height = video.videoHeight) {
-  const isPortraitMode = getSelectedMode("aspectRatioMode") === "portrait";
+  const isSquareMode = getSelectedMode("aspectRatioMode") === "square";
 
-  stage.classList.toggle("is-portrait", isPortraitMode);
+  stage.classList.toggle("is-square", isSquareMode);
 
-  if (isPortraitMode) {
-    stage.style.setProperty("--video-aspect", "3 / 4");
+  if (isSquareMode) {
+    stage.style.setProperty("--video-aspect", "1 / 1");
     return;
   }
 
@@ -1530,11 +1530,11 @@ function updatePresetStates() {
       state.textContent = saved ? "已保存" : "未保存";
     }
 
-    const loadButton = document.querySelector(
+    const loadButtons = document.querySelectorAll(
       `[data-preset-action="load"][data-preset-slot="${slotKey}"]`,
     );
 
-    if (loadButton) {
+    for (const loadButton of loadButtons) {
       loadButton.disabled = !saved;
     }
   }

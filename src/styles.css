@@ -284,8 +284,8 @@ button {
   object-fit: contain;
 }
 
-.stage.is-portrait video,
-.stage.is-portrait canvas {
+.stage.is-square video,
+.stage.is-square canvas {
   object-fit: cover;
 }
 
@@ -445,6 +445,22 @@ button {
   border-color: transparent;
   background: var(--accent);
   color: #fff;
+}
+
+.recording-preset-control {
+  border-color: rgba(123, 97, 255, 0.18);
+  background: rgba(123, 97, 255, 0.12);
+  color: var(--accent);
+}
+
+.recording-preset-control:not(:disabled) {
+  background: linear-gradient(135deg, rgba(123, 97, 255, 0.96), rgba(147, 124, 255, 0.92));
+  color: #fff;
+}
+
+.recording-preset-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
 }
 
 .panel {
@@ -962,20 +978,15 @@ output {
 
 @media (orientation: portrait) {
   .recording-quick-controls {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px;
-    overflow-x: auto;
+    overflow: visible;
     padding: 2px 0 4px;
-    scrollbar-width: none;
-  }
-
-  .recording-quick-controls::-webkit-scrollbar {
-    display: none;
   }
 
   .recording-quick-control {
-    flex: 0 0 auto;
-    min-width: 74px;
+    min-width: 0;
   }
 }
 
@@ -1071,6 +1082,10 @@ output {
     min-width: 0;
   }
 
+  .recording-preset-control {
+    grid-column: span 2;
+  }
+
   .mode-group.compact {
     gap: 8px;
   }
@@ -1154,7 +1169,7 @@ output {
 
 @media (orientation: portrait) and (min-width: 640px) and (max-width: 780px) {
   .recording-quick-controls {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .panel {

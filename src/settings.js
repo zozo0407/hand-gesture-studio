@@ -39,7 +39,7 @@ export const DEFAULT_SETTINGS = {
 const SHAPES = new Set(["line", "circle"]);
 const HAND_AREA_MODES = new Set(["independent", "connected"]);
 const GESTURE_LABEL_LANGUAGES = new Set(["zh", "en"]);
-const ASPECT_RATIO_MODES = new Set(["current", "portrait"]);
+const ASPECT_RATIO_MODES = new Set(["current", "square"]);
 
 export function readSettings(storage = getDefaultStorage()) {
   const storedSettings = readStoredSettings(storage);
@@ -202,6 +202,7 @@ function normalizeLanguage(value, fallback) {
 }
 
 function normalizeAspectRatioMode(value, fallback) {
+  if (value === "portrait") return "square";
   return ASPECT_RATIO_MODES.has(value) ? value : fallback;
 }
 

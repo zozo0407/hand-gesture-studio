@@ -68,6 +68,30 @@
             </div>
 
             <div class="recording-quick-controls" aria-label="竖屏录制快捷控制">
+              <button
+                class="recording-quick-control recording-preset-control"
+                type="button"
+                data-preset-action="load"
+                data-preset-slot="1"
+              >
+                预设 1
+              </button>
+              <button
+                class="recording-quick-control recording-preset-control"
+                type="button"
+                data-preset-action="load"
+                data-preset-slot="2"
+              >
+                预设 2
+              </button>
+              <button
+                class="recording-quick-control recording-preset-control"
+                type="button"
+                data-preset-action="load"
+                data-preset-slot="3"
+              >
+                预设 3
+              </button>
               <button class="recording-quick-control" type="button" data-quick-toggle="showLandmarks" aria-pressed="true">
                 关键点
               </button>
@@ -305,8 +329,8 @@
                   <span>当前比例</span>
                 </label>
                 <label>
-                  <input type="radio" name="aspectRatioMode" value="portrait" />
-                  <span>竖屏 3:4</span>
+                  <input type="radio" name="aspectRatioMode" value="square" />
+                  <span>方形 1:1</span>
                 </label>
               </fieldset>
             </section>
