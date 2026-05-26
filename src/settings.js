@@ -33,7 +33,7 @@ export const DEFAULT_SETTINGS = {
   gestureScoreThreshold: 0.5,
   gestureLabelLanguage: "zh",
   enabledGestures: DEFAULT_ENABLED_GESTURES,
-  aspectRatioMode: "current",
+  aspectRatioMode: "square",
 };
 
 const SHAPES = new Set(["line", "circle"]);

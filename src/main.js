@@ -1383,7 +1383,10 @@ function loadPreset(slot) {
     return;
   }
 
-  applySettings(settings);
+  applySettings({
+    ...settings,
+    aspectRatioMode: "square",
+  });
   persistCurrentSettings();
   resetAllSmoothedShapes();
   resetAllStableGestures();
