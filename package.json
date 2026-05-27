@@ -1,7 +1,7 @@
 {
-  "name": "mediapipe-hand-gesture-workshop",
+  "name": "hand-gesture-studio",
   "version": "0.1.0",
-  "description": "A Vite and MediaPipe starter template for building browser-based hand gesture interactions.",
+  "description": "A MediaPipe hand gesture studio for webcam tracking, visual effects, presets, and audio-reactive interactions.",
   "license": "MIT",
   "type": "module",
   "keywords": [

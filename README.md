@@ -1,6 +1,8 @@
-# MediaPipe Hand Gesture Workshop
+# Hand Gesture Studio
 
-一个基于 Vite、JavaScript 和 MediaPipe Hand Gesture Recognizer 的浏览器手势交互模板。它面向会使用 AI coding 工具的开发者：先 fork 或 clone，跑通摄像头手势识别，再让 AI 助手基于清晰的代码入口继续改成自己的互动项目。
+一个基于 Vite、JavaScript 和 MediaPipe Hand Gesture Recognizer 的浏览器手势视觉工作室。它支持摄像头手部识别、1:1 录制比例、参数预设、区域特效和声音映射，适合做互动视觉 demo、创意编码实验、教学展示和 AI coding 二次开发模板。
+
+A browser-based hand gesture visual studio built with Vite, JavaScript, and MediaPipe Hand Gesture Recognizer. It includes webcam hand tracking, square recording controls, local presets, masked visual effects, and audio-reactive interaction mapping for demos, creative coding prototypes, education, and AI-assisted remixing.
 
 项目默认把 MediaPipe WASM 和手势模型放在 `public/mediapipe`，运行时不依赖 CDN。
 
