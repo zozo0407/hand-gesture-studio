@@ -6,7 +6,7 @@ This project includes third-party runtime assets so the demo can load MediaPipe 
 
 - Package: `@mediapipe/tasks-vision`
 - Version: `0.10.22-rc.20250304`
-- License: Apache License 2.0
+- License: Apache License 2.0. A copy is included at [licenses/Apache-2.0.txt](licenses/Apache-2.0.txt).
 - Homepage: <https://mediapipe.dev>
 
 The npm package is listed in [package.json](package.json) and locked in [package-lock.json](package-lock.json).
@@ -22,6 +22,8 @@ The following files are stored under `public/mediapipe` and are served by the ap
 - `public/mediapipe/wasm/vision_wasm_nosimd_internal.wasm`
 
 These assets are redistributed for local browser execution of MediaPipe Tasks. If you replace or update them, keep the upstream license and notice requirements with the new assets.
+
+MediaPipe source and type files include copyright notices for The MediaPipe Authors and references to the Apache License, Version 2.0.
 
 ## Application Code
 

@@ -6,6 +6,13 @@ A browser-based hand gesture visual studio built with Vite, JavaScript, and Medi
 
 项目默认把 MediaPipe WASM 和手势模型放在 `public/mediapipe`，运行时不依赖 CDN。
 
+## 隐私与摄像头
+
+- 摄像头画面、手部关键点、手势结果和音频映射默认都在浏览器本地处理。
+- 默认实现不会把视频、图片、音频、手部关键点或手势识别结果上传到服务器。
+- 参数和 3 个预设保存在浏览器 `localStorage`，不会自动同步到云端。
+- 如果你基于本项目加入后端上传、分析统计、账号系统或第三方 analytics，请在自己的产品中补充清晰的隐私说明和用户授权流程。
+
 ## 适合做什么
 
 - 手势控制的网页 demo、创意编码实验、互动装置原型。
@@ -133,6 +140,8 @@ npm run build
 ├── AI_CODING_GUIDE.md
 ├── CONTRIBUTING.md
 ├── THIRD_PARTY_NOTICES.md
+├── licenses/
+│   └── Apache-2.0.txt
 ├── index.html
 ├── netlify.toml
 ├── public/
