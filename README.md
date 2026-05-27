@@ -4,6 +4,10 @@
 
 A browser-based hand gesture visual studio built with Vite, JavaScript, and MediaPipe Hand Gesture Recognizer. It includes webcam hand tracking, square recording controls, local presets, masked visual effects, and audio-reactive interaction mapping for demos, creative coding prototypes, education, and AI-assisted remixing.
 
+<p align="center">
+  <img src="assets/demo.gif" alt="Hand Gesture Studio demo" width="640">
+</p>
+
 项目默认把 MediaPipe WASM 和手势模型放在 `public/mediapipe`，运行时不依赖 CDN。
 
 ## 隐私与摄像头
